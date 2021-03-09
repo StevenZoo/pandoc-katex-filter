@@ -1,0 +1,15 @@
+{
+  "name": "katex-server",
+  "version": "0.1.0",
+  "description": "TCP server which renders KaTeX markup to HTML.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Steven",
+  "license": "MIT",
+  "dependencies": {
+    "katex": "^0.13.0"
+  }
+}
