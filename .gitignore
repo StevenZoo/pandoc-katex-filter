@@ -1,0 +1,18 @@
+### Python
+
+# Byte-compiled files
+__pycache__/
+
+# PyCharm
+.idea/
+
+
+
+### Node 
+
+# Optional npm cache directory
+.npm
+
+# Dependency directories
+node_modules/
+
