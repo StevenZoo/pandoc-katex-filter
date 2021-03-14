@@ -23,29 +23,27 @@ def katex(key, value, format, meta):
     formatter, tex = value
     display_mode = formatter['t'] == 'DisplayMath'
 
-    html = render(tex, display_mode)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as katex_socket:
+        error_code = connect(HOST, PORT, katex_socket)
+        if error_code:
+            return None
 
-    if html is not None:
-        return RawInline('html', html)
+        html = render(tex, display_mode, katex_socket)
+
+        if html is not None:
+            return RawInline('html', html)
 
 
 # Sends TeX input to a server that renders into HTML.
-def render(tex: str, display_mode: bool, host=HOST, port=PORT) -> Optional[str]:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as katex_socket:
-        try:
-            katex_socket.connect((HOST, PORT))
-        except socket.error as error:
-            log_error(error)
-            return None
+def render(tex: str, display_mode: bool, katex_socket) -> Optional[str]:
+    send_message(tex, display_mode, katex_socket)
+    data, has_error = get_response(katex_socket)
 
-        send_message(tex, display_mode, katex_socket)
-        data, has_error = get_response(katex_socket)
+    if has_error:
+        log_error(tex, data)
+        return None
 
-        if has_error:
-            log_error(tex, data)
-            return None
-
-        return data
+    return data
 
 
 # Sends a TeX string, prefixed with a flag to set the display mode.
@@ -77,6 +75,15 @@ def poll(sock) -> bytearray:
             return chunks
 
         chunks.extend(chunk)
+
+
+def connect(host: str, port: str, sock) -> int:
+    try:
+        katex_socket.connect((host, port))
+        return 0
+    except socket.error as error:
+        log_error(error)
+        return 1
 
 
 def log_error(error: str):
