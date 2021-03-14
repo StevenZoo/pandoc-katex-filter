@@ -4,7 +4,9 @@ const katex = require("katex");
 const HOST = "localhost";
 const PORT = 7000;
 
-let NUM_BYTES_META = 1;
+const SUCCESS_BYTE = '\x00'; 
+const ERROR_BYTE = '\x01';
+
 
 function renderToString(tex, display) {
   return katex.renderToString(tex, {
@@ -13,18 +15,13 @@ function renderToString(tex, display) {
 }
 
 function render(tex, display) {
-  let output;
-  let errorByte = "\x00";
-
   try {
     output = renderToString(tex, display);
+    return SUCCESS_BYTE + output;
   } catch (e) {
     console.log(e);
-    output = e;
-    errorByte = "\x01";
+    return ERROR_BYTE + e;
   }
-
-  return output + errorByte;
 }
 
 let server = net.createServer((stream) => {
@@ -36,9 +33,9 @@ let server = net.createServer((stream) => {
 
   stream.on("end", (e) => {
     let buffer = Buffer.from(chunks);
-    let display = buffer[buffer.length - 1] === 1;
+    let display = buffer[0] === 1;
 
-    let tex = buffer.toString("UTF-8", 0, buffer.length - NUM_BYTES_META);
+    let tex = buffer.toString("UTF-8", 1, buffer.length);
     stream.write(render(tex, display));
   }) 
 
