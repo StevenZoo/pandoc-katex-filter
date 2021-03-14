@@ -21,16 +21,16 @@ def katex(key, value, format, meta):
         return None
 
     formatter, tex = value
-    display = formatter['t'] == 'DisplayMath'
+    display_mode = formatter['t'] == 'DisplayMath'
 
-    html = render(tex, display)
+    html = render(tex, display_mode)
 
     if html is not None:
         return RawInline('html', html)
 
 
 # Sends TeX input to a server that renders into HTML.
-def render(tex: str, display: bool, host=HOST, port=PORT) -> Optional[str]:
+def render(tex: str, display_mode: bool, host=HOST, port=PORT) -> Optional[str]:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as katex_socket:
         try:
             katex_socket.connect((HOST, PORT))
@@ -38,12 +38,9 @@ def render(tex: str, display: bool, host=HOST, port=PORT) -> Optional[str]:
             log_error(error)
             return None
 
-        display_flag = DISPLAY_BYTE if display else INLINE_BYTE
-        input_message = display_flag + tex
-
-        send_message(input_message, katex_socket)
-
+        send_message(tex, display_mode, katex_socket)
         data, has_error = get_response(katex_socket)
+
         if has_error:
             log_error(tex, data)
             return None
@@ -51,8 +48,13 @@ def render(tex: str, display: bool, host=HOST, port=PORT) -> Optional[str]:
         return data
 
 
-def send_message(input_message: str, sock):
+# Sends a TeX string, prefixed with a flag to set the display mode.
+def send_message(tex: str, display_mode: bool, sock):
+    display_setting = DISPLAY_BYTE if display_mode else INLINE_BYTE
+    input_message = display_setting + tex
+
     request = input_message.encode(ENCODING)
+
     sock.sendall(request)
     sock.shutdown(socket.SHUT_WR)
 
