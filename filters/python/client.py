@@ -5,9 +5,7 @@ from typing import Optional
 HOST = "localhost"
 PORT = 7000
 
-EOT_BYTE = '\x04'
-EOT_INT = 4
-NUM_BYTES_META = 2
+NUM_BYTES_META = 1
 
 ENCODING = "UTF-8"
 
@@ -24,16 +22,17 @@ def poll(sock) -> bytearray:
     chunks = bytearray()
     while True:
         chunk = sock.recv(1024)
+
+        if not chunk:
+            return chunks
+
         chunks.extend(chunk)
 
-        EOT = chunk[-1] == EOT_INT
-        if EOT:
-            return chunks
 
 
 def unpack(response: bytearray) -> tuple:
     data = response[:len(response) - NUM_BYTES_META]
-    has_error = response[-2] == 1
+    has_error = response[-1] == 1
 
     output = data.decode(ENCODING)
     return output, has_error
@@ -42,6 +41,7 @@ def unpack(response: bytearray) -> tuple:
 def send_message(input_message: str, sock) -> tuple:
     request = input_message.encode(ENCODING)
     sock.sendall(request)
+    sock.shutdown(socket.SHUT_WR)
     response = poll(sock)
 
     return unpack(response)
@@ -56,11 +56,11 @@ def render(tex: str, display: bool, host=HOST, port=PORT) -> Optional[str]:
         connect(host, port, katex_socket)
 
         display_byte = '\x01' if display else '\x00'
-        input_message = tex + display_byte + EOT_BYTE
+        input_message = tex + display_byte
 
         output, has_error = send_message(input_message, katex_socket)
         if has_error:
             log_error(tex, output)
             return None
-
+            
         return output
