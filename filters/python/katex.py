@@ -14,6 +14,7 @@ DISPLAY_BYTE = "\x01"
 
 ENCODING = "UTF-8"
 
+
 # Primary method for Pandoc filter.
 def katex(key, value, format, meta):
     if key != "Math" or len(value) < 2:
@@ -26,6 +27,7 @@ def katex(key, value, format, meta):
 
     if html is not None:
         return RawInline('html', html)
+
 
 # Sends TeX input to a server that renders into HTML.
 def render(tex: str, display: bool, host=HOST, port=PORT) -> Optional[str]:
@@ -64,6 +66,7 @@ def get_response(sock) -> tuple:
 
     return data, has_error
 
+
 def poll(sock) -> bytearray:
     chunks = bytearray()
     while True:
@@ -76,6 +79,7 @@ def poll(sock) -> bytearray:
 
 def log_error(error: str):
     print(error, file=sys.stderr)
+
 
 def log_error(input: str, error: str):
     log_error(f'Input: {input}\t{error}')
