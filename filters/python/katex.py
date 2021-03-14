@@ -79,7 +79,7 @@ def poll(sock) -> bytearray:
 
 def connect(host: str, port: str, sock) -> int:
     try:
-        katex_socket.connect((host, port))
+        sock.connect((host, port))
         return 0
     except socket.error as error:
         log_error(error)
