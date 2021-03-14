@@ -26,6 +26,7 @@ def katex(key, value, format, meta):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as katex_socket:
         error_code = connect(HOST, PORT, katex_socket)
         if error_code:
+            log_error(error)
             return None
 
         html = render(tex, display_mode, katex_socket)
@@ -37,9 +38,9 @@ def katex(key, value, format, meta):
 # Sends TeX input to a server that renders into HTML.
 def render(tex: str, display_mode: bool, katex_socket) -> Optional[str]:
     send_message(tex, display_mode, katex_socket)
-    data, has_error = get_response(katex_socket)
+    data, error_code = get_response(katex_socket)
 
-    if has_error:
+    if error_code:
         log_error(tex, data)
         return None
 
@@ -60,11 +61,11 @@ def send_message(tex: str, display_mode: bool, sock):
 def get_response(sock) -> tuple:
     response = poll(sock)
 
-    # Deconstruct response into error flag and rendered HTML/error message, depending on success or error.
-    has_error = response[0] == 1
+    # Deconstruct response into error code and rendered HTML/error message, depending on success or error.
+    error_code = response[0]
     data = response[1:].decode(ENCODING)
 
-    return data, has_error
+    return data, error_code
 
 
 def poll(sock) -> bytearray:
@@ -81,8 +82,7 @@ def connect(host: str, port: str, sock) -> int:
     try:
         sock.connect((host, port))
         return 0
-    except socket.error as error:
-        log_error(error)
+    except socket.error:
         return 1
 
 
