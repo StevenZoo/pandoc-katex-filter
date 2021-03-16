@@ -36,6 +36,9 @@ pandoc -i samples/hello.md --filter pandoc-filters/python/katex.py
 pandoc -i samples/hello.md -H samples/styles/styles.html --filter pandoc-filters/python/katex.py > samples/output/hello.html
 ```
 
+## Use Cases
+- Pre-rendering the math on a site built with a static site generator. (My case with [Hugo](https://gohugo.io/).)
+
 ## How does this work?
 Pandoc is a software capable of converting documents from one format to another. With filters, we can add custom logic to extend the functionality of Pandoc.
 
@@ -44,9 +47,6 @@ To render KaTeX markup, we have a Node.js server running in the background. This
 The Python filter is the bridge between Pandoc and Node - it takes the TeX content found by Pandoc, passes it to the server, and returns the rendered HTML back to Pandoc.
 
 Having a server running in the background helps with performance. We avoid the time penalty from creating a new Node process each time we render a math expression.
-
-## Use Cases
-- Pre-rendering the math on a site built with a static site generator. (My case with [Hugo](https://gohugo.io/).)
 
 ## Related Links
 Thank you to the people in these links for their open contributions.
