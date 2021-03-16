@@ -24,8 +24,8 @@ def katex(key, value, format, meta):
     display_mode = formatter['t'] == 'DisplayMath'
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as katex_socket:
-        error_code = connect(HOST, PORT, katex_socket)
-        if error_code:
+        error = connect(HOST, PORT, katex_socket)
+        if error:
             log_error(error)
             return None
 
@@ -41,7 +41,7 @@ def render(tex: str, display_mode: bool, katex_socket) -> Optional[str]:
     data, error_code = get_response(katex_socket)
 
     if error_code:
-        log_error(tex, data)
+        log_katex_error(tex, data)
         return None
 
     return data
@@ -81,16 +81,15 @@ def poll(sock) -> bytearray:
 def connect(host: str, port: str, sock) -> int:
     try:
         sock.connect((host, port))
-        return 0
-    except socket.error:
-        return 1
+    except socket.error as error:
+        return error
 
 
 def log_error(error: str):
     print(error, file=sys.stderr)
 
 
-def log_error(input: str, error: str):
+def log_katex_error(input: str, error: str):
     log_error(f'Input: {input}\t{error}')
 
 
