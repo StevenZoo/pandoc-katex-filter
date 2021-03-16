@@ -46,7 +46,7 @@ The Python filter is the bridge between Pandoc and Node - it takes the TeX conte
 Having a server running in the background helps with performance. We avoid the time penalty from creating a new Node process each time we render a math expression.
 
 ## Use Cases
-- Pre-rendering the math on a site built with a static site generator. (My case with Hugo.)
+- Pre-rendering the math on a site built with a static site generator. (My case with [Hugo](https://gohugo.io/).)
 
 ## Related Links
 Thank you to the people in these links for their open contributions.
