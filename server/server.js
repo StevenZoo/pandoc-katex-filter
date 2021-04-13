@@ -19,7 +19,7 @@ function render(tex, display) {
     output = renderToString(tex, display);
     return SUCCESS_BYTE + output;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return ERROR_BYTE + e;
   }
 }
