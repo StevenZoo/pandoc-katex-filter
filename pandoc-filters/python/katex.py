@@ -56,14 +56,14 @@ def send_message(tex: str, display: bool, sock):
     sock.shutdown(socket.SHUT_WR)
 
 
-def build_request(tex: str, display: bool) -> bytearray:
+def build_request(tex: str, display: bool) -> bytes:
     display_mode = DISPLAY_BYTE if display else INLINE_BYTE
     input_message = display_mode + tex
 
     return input_message.encode(ENCODING)
 
 
-def get_response(sock) -> tuple:
+def get_response(sock) -> str:
     response = poll(sock)
     return response.decode(ENCODING)
 
@@ -78,7 +78,7 @@ def poll(sock) -> bytearray:
         chunks.extend(chunk)
 
 
-def connect(host: str, port: str, sock):
+def connect(host: str, port: int, sock):
     try:
         sock.connect((host, port))
     except socket.error as error:
