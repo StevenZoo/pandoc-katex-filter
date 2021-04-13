@@ -11,6 +11,7 @@ PORT = 7000
 
 INLINE_BYTE = "\x00"
 DISPLAY_BYTE = "\x01"
+ERROR_PREFIX = "error:"
 
 ENCODING = "UTF-8"
 
@@ -36,11 +37,12 @@ def katex(key, value, format, meta):
 # Renders TeX input to HTML
 def render(tex: str, display: bool, katex_socket) -> Optional[str]:
     send_message(tex, display, katex_socket)
-    data, error_code = get_response(katex_socket)
+    data = get_response(katex_socket)
 
-    if error_code > 0:
+    if data.startswith(ERROR_PREFIX):
         # Log error message with source TeX input
-        logger.error(f'Input: {tex}  {data}')
+        error_message = data[len(ERROR_PREFIX):]
+        logger.error(f'Input: {tex}  {error_message}')
         return None
 
     return data
@@ -63,14 +65,7 @@ def build_request(tex: str, display: bool) -> bytearray:
 
 def get_response(sock) -> tuple:
     response = poll(sock)
-
-    # Check first byte for error code.
-    error_code = response[0]
-    data = response[1:].decode(ENCODING)
-
-    # On error, data will be the error message.
-    # On success, data will be the rendered HTML.
-    return data, error_code
+    return response.decode(ENCODING)
 
 
 def poll(sock) -> bytearray:

@@ -4,8 +4,7 @@ const katex = require("katex");
 const HOST = "localhost";
 const PORT = 7000;
 
-const SUCCESS_BYTE = '\x00'; 
-const ERROR_BYTE = '\x01';
+const ERROR_PREFIX = 'error:';
 
 
 function renderToString(tex, display) {
@@ -16,11 +15,10 @@ function renderToString(tex, display) {
 
 function render(tex, display) {
   try {
-    output = renderToString(tex, display);
-    return SUCCESS_BYTE + output;
+    return renderToString(tex, display);
   } catch (e) {
     console.error(e);
-    return ERROR_BYTE + e;
+    return ERROR_PREFIX + e;
   }
 }
 
