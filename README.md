@@ -1,4 +1,4 @@
-# pandoc-server-side-katex
+# pandoc-render-katex
 
 This project sets up an environment to pre-render [KaTeX](https://katex.org/) markup into HTML with Pandoc. 
 
