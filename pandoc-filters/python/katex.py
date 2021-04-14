@@ -18,7 +18,7 @@ ENCODING = "UTF-8"
 logger = logging.getLogger(__name__)
 
 
-# Primary method for Pandoc filter.
+# Entrypoint for Pandoc filter.
 def katex(key, value, format, meta):
     if key != "Math" or len(value) < 2:
         return None
@@ -40,7 +40,7 @@ def render(tex: str, display: bool, katex_socket) -> Optional[str]:
     data = get_response(katex_socket)
 
     if data.startswith(ERROR_PREFIX):
-        # Log error message with source TeX input
+        # Log error message with source input
         error_message = data[len(ERROR_PREFIX):]
         logger.error(f'Input: {tex}  {error_message}')
         return None
@@ -48,7 +48,6 @@ def render(tex: str, display: bool, katex_socket) -> Optional[str]:
     return data
 
 
-# Sends a TeX string, prefixed with the display mode, to the server.
 def send_message(tex: str, display: bool, sock):
     request = build_request(tex, display)
 
@@ -56,6 +55,9 @@ def send_message(tex: str, display: bool, sock):
     sock.shutdown(socket.SHUT_WR)
 
 
+# Request structure: BYTE + TeX string. 
+# The byte signals which display style to use.
+# KaTeX defaults to the inline style.
 def build_request(tex: str, display: bool) -> bytes:
     display_mode = DISPLAY_BYTE if display else INLINE_BYTE
     input_message = display_mode + tex
