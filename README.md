@@ -25,7 +25,11 @@ pip3 install -r requirements.txt
 ```
 # Start the server
 npm start
+```
 
+
+Open a second terminal
+```
 # Pipe TeX input
 echo '$a+b$' | pandoc --filter pandoc-filters/python/katex.py
 
