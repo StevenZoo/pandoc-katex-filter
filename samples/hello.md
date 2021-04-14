@@ -20,6 +20,7 @@ $$
 $$
 
 ##### Note
-This does *not* work due to the space between the $ delimiter and the TeX expression: $ a+b $
+This expression does *not* work due to the space between the $ delimiter and the TeX expression: $ a+b $
 
-But that does not mean you can't have spaces: $a + b$
+Pandoc will see $ a+b $ as just text, and render accordingly. It won't be considered as a math expression.
+
