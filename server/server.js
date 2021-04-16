@@ -22,7 +22,7 @@ function render(tex, display) {
   }
 }
 
-let server = net.createServer((stream) => {
+let server = net.createServer({allowHalfOpen: true}, (stream) => {
   let chunks = [];
 
   stream.on("data", (chunk) => {
@@ -35,6 +35,7 @@ let server = net.createServer((stream) => {
 
     let tex = buffer.toString("UTF-8", 1, buffer.length);
     stream.write(render(tex, display));
+    stream.end()
   }) 
 
   stream.on("error", (e) => {
