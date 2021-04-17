@@ -32,13 +32,13 @@ npm start
 
 ```
 # Pipe TeX input
-echo '$a+b$' | pandoc --filter pandoc-filters/python/katex.py
+echo '$a+b$' | pandoc --filter filters/katex.py
 
 # Process input file
-pandoc -i samples/hello.md --filter pandoc-filters/python/katex.py
+pandoc -i samples/hello.md --filter filters/katex.py
 
 # Create standalone HTML file
-pandoc -i samples/hello.md -H samples/styles/styles.html --filter pandoc-filters/python/katex.py > samples/output/hello.html
+pandoc -i samples/hello.md -H samples/styles/styles.html --filter filters/katex.py > samples/output/hello.html
 ```
 
 ## Use Cases
