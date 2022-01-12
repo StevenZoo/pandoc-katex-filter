@@ -1,15 +1,14 @@
 {
-  "name": "katex-server",
+  "name": "pandoc-katex-filter",
   "version": "0.1.0",
-  "description": "TCP server which renders KaTeX markup to HTML.",
-  "main": "./server/server.js",
+  "description": "Pandoc filter which renders KaTeX markup to HTML.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./server/server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Steven",
   "license": "MIT",
   "dependencies": {
-    "katex": "^0.13.0"
+    "katex": "^0.13.0",
+    "pandoc-filter": "^2.0.2"
   }
 }
