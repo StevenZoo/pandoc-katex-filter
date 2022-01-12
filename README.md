@@ -13,7 +13,6 @@ Please make sure you have Pandoc and Node.js already installed.
 Run these commands to install the necessary dependencies.
 
 ```
-## Node
 npm install
 ```
 
@@ -21,32 +20,36 @@ npm install
 
 ```
 # Pipe TeX input
-echo '$a+b$' | pandoc --filter src/katex-filter.js
+echo '$a+b$' | pandoc -F src/katex-filter.js
 
 # Process input file
-pandoc -i samples/hello.md --filter src/katex-filter.js
+pandoc -i samples/hello.md -F src/katex-filter.js
 
 # Create standalone HTML file
-pandoc -i samples/hello.md -H samples/styles/styles.html --filter src/katex-filter.js > samples/output/hello.html
+pandoc -i samples/hello.md -o samples/output/hello.html -H samples/styles/styles.html -F src/katex-filter.js
 ```
 
 ## Error Handling
 
 If KaTeX can't render an expression to HTML, it will throw an error. By default, this filter will propagate that error immediately.
 
-Alternatively, add the `batch-katex-error` flag to direct the error message to standard error, and continue processing. This can be useful if you want to see all errors at once.
+Alternatively, to continue processing the rest of the document, add the `batch-katex-error` metadata flag to direct the error message to the standard error stream. This can be useful if you want to see all errors at once.
+
+When using this flag, you can still produce an output HTML file. Any TeX that causes errors will be highlighted in red.
 
 ```
-# Process input file with error
-pandoc -i samples/hello-error.md --filter src/katex-filter.js
+# Throws Error
+pandoc -i samples/hello-error.md -F src/katex-filter.js
 
-# Pipe errors to standard error
-pandoc -i samples/hello-error.md --filter src/katex-filter.js -Mbatch-katex-errors
+# Direct errors to standard error
+pandoc -i samples/hello-error.md -F src/katex-filter.js -Mbatch-katex-errors
 
-# Create standalone HTML file. (Incorrect TeX will be highlighted in red.)
-pandoc -i samples/hello-error.md -H samples/styles/styles.html --filter src/katex-filter.js -Mbatch-katex-errors > samples/output/hello-error.html
+# Further redirect errors into a file for easier viewing
+pandoc -i samples/hello-error.md -F src/katex-filter.js -Mbatch-katex-errors 2> errors.txt
+
+# Generate HTML file, even with errors from source.
+pandoc -i samples/hello-error.md -o samples/output/hello-error.html -H samples/styles/styles.html -F src/katex-filter.js -Mbatch-katex-errors
 ```
-
 
 ## Use Cases
 - Pre-rendering the math on a site built with a static site generator. (My case with [Hugo](https://gohugo.io/).)
