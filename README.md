@@ -10,7 +10,7 @@ Please make sure you have Pandoc and Node.js already installed.
 
 ## Installation
 
-Run these commands to install the necessary dependencies.
+Run this command to install the necessary dependencies.
 
 ```
 npm install
