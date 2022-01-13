@@ -31,7 +31,11 @@ pandoc -i samples/hello.md -o samples/output/hello.html -H samples/styles/styles
 
 ## Error Handling
 
+**Throw now...**
+
 If KaTeX can't render an expression to HTML, it will throw an error. By default, this filter will propagate that error immediately.
+
+**Or handle later...**
 
 Alternatively, to continue processing the rest of the document, add the `batch-katex-error` metadata flag to direct the error message to the standard error stream. This can be useful if you want to see all errors at once.
 
