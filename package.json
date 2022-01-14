@@ -1,7 +1,7 @@
 {
   "name": "pandoc-katex-filter",
   "description": "A Pandoc filter that renders KaTeX markup to HTML.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "author": "Steven",
   "repository": "github:StevenZoo/pandoc-katex-filter",
