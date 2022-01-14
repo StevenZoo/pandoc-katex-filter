@@ -1,6 +1,6 @@
 {
   "name": "pandoc-katex-filter",
-  "description": "Pandoc filter that renders KaTeX markup to HTML.",
+  "description": "A Pandoc filter that renders KaTeX markup to HTML.",
   "version": "0.1.1",
   "license": "MIT",
   "author": "Steven",
