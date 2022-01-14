@@ -10,23 +10,34 @@ Please make sure you have Pandoc and Node.js already installed.
 
 ## Installation
 
-Run this command to install the necessary dependencies.
+```
+npm install -g pandoc-katex-filter
+```
 
+## Invocation
+
+### MacOS/Linux
 ```
-npm install
+pandoc --filter pandoc-katex-filter
 ```
+
+### Windows
+```
+pandoc --filter pandoc-katex-filter.cmd
+```
+Without the `.cmd` on Windows, Pandoc will not be able to find the filter. Please don't forget! The examples below will use the MacOS/Linux syntax.
 
 ## Example Usage
 
 ```
 # Pipe TeX input
-echo '$a+b$' | pandoc -F src/katex-filter.js
+echo '$a+b$' | pandoc --filter pandoc-katex-filter
 
 # Process input file
-pandoc -i samples/hello.md -F src/katex-filter.js
+pandoc -i samples/hello.md --filter pandoc-katex-filter
 
 # Create standalone HTML file
-pandoc -i samples/hello.md -o samples/output/hello.html -H samples/styles/styles.html -F src/katex-filter.js
+pandoc -i samples/hello.md -o samples/output/hello.html -H samples/styles/styles.html --filter pandoc-katex-filter
 ```
 
 ## Error Handling
@@ -43,16 +54,16 @@ When using this flag, you can still produce an output HTML file. Any TeX that ca
 
 ```
 # Throws Error
-pandoc -i samples/hello-error.md -F src/katex-filter.js
+pandoc -i samples/hello-error.md --filter pandoc-katex-filter
 
 # Direct errors to standard error
-pandoc -i samples/hello-error.md -F src/katex-filter.js -Mkatex-batch-errors
+pandoc -i samples/hello-error.md --filter pandoc-katex-filter -Mkatex-batch-errors
 
 # Further redirect errors into a file for easier viewing
-pandoc -i samples/hello-error.md -F src/katex-filter.js -Mkatex-batch-errors 2> errors.txt
+pandoc -i samples/hello-error.md --filter pandoc-katex-filter -Mkatex-batch-errors 2> errors.txt
 
 # Generate HTML file, even with errors from source.
-pandoc -i samples/hello-error.md -o samples/output/hello-error.html -H samples/styles/styles.html -F src/katex-filter.js -Mkatex-batch-errors
+pandoc -i samples/hello-error.md -o samples/output/hello-error.html -H samples/styles/styles.html --filter pandoc-katex-filter -Mkatex-batch-errors
 ```
 
 ## Use Cases
@@ -62,6 +73,10 @@ pandoc -i samples/hello-error.md -o samples/output/hello-error.html -H samples/s
 Pandoc is a software capable of converting documents from one format to another. With filters, we can add custom logic to extend the functionality of Pandoc.
 
 To render KaTeX markup, we take the TeX content found by Pandoc, and use the KaTeX library to render TeX into HTML.
+
+## License
+
+Released under the [MIT License](LICENSE).
 
 ## Related Links
 Thanks to the people in these links for their open contributions.
