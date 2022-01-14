@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const pandoc = require("pandoc-filter");
 const katex = require("katex");
 
