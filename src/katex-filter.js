@@ -2,7 +2,7 @@
 const pandoc = require("pandoc-filter");
 const katex = require("katex");
 
-const BATCH_ERRORS = "batch-katex-errors";
+const BATCH_ERRORS = "katex-batch-errors";
 
 function getMetadataProperty(meta, property) {
   return meta.hasOwnProperty(property) && meta[property].c;
