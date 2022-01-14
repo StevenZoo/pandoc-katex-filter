@@ -16,9 +16,6 @@
     "rendering",
     "math"
   ],
-  "files": [
-    "src"
-  ],
   "bin": "src/katex-filter.js",
   "dependencies": {
     "katex": "^0.13.0",
