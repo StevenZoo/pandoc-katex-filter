@@ -25,9 +25,7 @@ pandoc --filter pandoc-katex-filter
 ```
 pandoc --filter pandoc-katex-filter.cmd
 ```
-📌 The `.cmd` suffix is **required** on Windows. Otherwise, Pandoc won't find the filter. Please don't forget! 
-
-The examples below will use the MacOS/Linux syntax.
+📌 The `.cmd` suffix is **required** on Windows. Otherwise, Pandoc won't find the filter. Please don't forget!
 
 ## Example Usage
 
