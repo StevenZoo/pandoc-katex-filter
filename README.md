@@ -76,7 +76,7 @@ To render KaTeX markup, we take the TeX content found by Pandoc, and use the KaT
 
 ## License
 
-Released under the [MIT License](LICENSE).
+`pandoc-katex-filter` is released under the [MIT License](LICENSE).
 
 ## Related Links
 Thanks to the people in these links for their open contributions.
