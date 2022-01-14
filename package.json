@@ -18,7 +18,7 @@
   ],
   "bin": "src/katex-filter.js",
   "dependencies": {
-    "katex": "^0.13.0",
+    "katex": "^0.15.2",
     "pandoc-filter": "^2.0.2"
   }
 }
