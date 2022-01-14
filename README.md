@@ -37,7 +37,7 @@ If KaTeX can't render an expression to HTML, it will throw an error. By default,
 
 **Or handle later...**
 
-Alternatively, to continue processing the rest of the document, add the `batch-katex-error` metadata flag to direct the error message to the standard error stream. This can be useful if you want to see all errors at once.
+Alternatively, to continue processing the rest of the document, add the `katex-batch-error` metadata flag to direct the error message to the standard error stream. This can be useful if you want to see all errors at once.
 
 When using this flag, you can still produce an output HTML file. Any TeX that causes errors will be highlighted in red.
 
@@ -46,13 +46,13 @@ When using this flag, you can still produce an output HTML file. Any TeX that ca
 pandoc -i samples/hello-error.md -F src/katex-filter.js
 
 # Direct errors to standard error
-pandoc -i samples/hello-error.md -F src/katex-filter.js -Mbatch-katex-errors
+pandoc -i samples/hello-error.md -F src/katex-filter.js -Mkatex-batch-errors
 
 # Further redirect errors into a file for easier viewing
-pandoc -i samples/hello-error.md -F src/katex-filter.js -Mbatch-katex-errors 2> errors.txt
+pandoc -i samples/hello-error.md -F src/katex-filter.js -Mkatex-batch-errors 2> errors.txt
 
 # Generate HTML file, even with errors from source.
-pandoc -i samples/hello-error.md -o samples/output/hello-error.html -H samples/styles/styles.html -F src/katex-filter.js -Mbatch-katex-errors
+pandoc -i samples/hello-error.md -o samples/output/hello-error.html -H samples/styles/styles.html -F src/katex-filter.js -Mkatex-batch-errors
 ```
 
 ## Use Cases
