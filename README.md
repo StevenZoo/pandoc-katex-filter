@@ -1,6 +1,6 @@
 # pandoc-katex-filter
 
-This project sets up an environment to pre-render [KaTeX](https://katex.org/) markup into HTML with Pandoc. 
+This project lets you pre-render [KaTeX](https://katex.org/) markup into HTML with Pandoc. 
 
 ## Requirements
 - [Pandoc](https://pandoc.org/)
@@ -50,7 +50,7 @@ If KaTeX can't render an expression to HTML, it will throw an error. By default,
 
 **Or handle later...**
 
-Alternatively, to continue processing the rest of the document, add the `katex-batch-error` metadata flag to direct the error message to the standard error stream. This can be useful if you want to see all errors at once.
+Alternatively, to continue processing the rest of the document, add the `katex-batch-errors` metadata flag to direct the error message to the standard error stream. This can be useful if you want to see all errors at once.
 
 When using this flag, you can still produce an output HTML file. Any TeX that causes errors will be highlighted in red.
 
