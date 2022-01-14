@@ -1,12 +1,22 @@
 {
   "name": "pandoc-katex-filter",
-  "version": "0.1.0",
   "description": "Pandoc filter which renders KaTeX markup to HTML.",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Steven",
+  "version": "0.1.0",
   "license": "MIT",
+  "author": "Steven",
+  "repository": "github:StevenZoo/pandoc-katex-filter",
+  "homepage": "https://github.com/StevenZoo/pandoc-katex-filter",
+  "bugs": "https://github.com/StevenZoo/pandoc-katex-filter/issues",
+  "readme": "https://github.com/StevenZoo/pandoc-katex-filter#readme",
+  "keywords": [
+    "pandoc",
+    "katex",
+    "filter",
+    "server-side",
+    "rendering",
+    "math"
+  ],
+  "bin": "src/katex-filter.js",
   "dependencies": {
     "katex": "^0.13.0",
     "pandoc-filter": "^2.0.2"
